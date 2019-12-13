@@ -1,0 +1,13 @@
+<hibernate-mapping>
+
+  <class name="ru.job4j.cars.modelxml.EngineXml" table="engine">
+    <id name="id" type="int" column="id" >
+      <generator class="identity" />
+    </id>
+
+    <property name = "power" column = "power" type = "int"/>
+
+
+  </class>
+
+</hibernate-mapping>
