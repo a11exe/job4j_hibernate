@@ -1,6 +1,7 @@
 package ru.job4j.hibernate.model;
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
  * @author Alexander Abramov (alllexe@mail.ru)
@@ -38,6 +39,24 @@ public class User {
 
   public void setExpired(Timestamp expired) {
     this.expired = expired;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof User)) {
+      return false;
+    }
+    User user = (User) o;
+    return id == user.id;
+  }
+
+  @Override
+  public int hashCode() {
+
+    return Objects.hash(id);
   }
 
   @Override
