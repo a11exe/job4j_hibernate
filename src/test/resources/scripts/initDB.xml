@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet author="allexe"
+    id="initDB"
+    objectQuotingStrategy="LEGACY">
+    <createTable tableName="USERS">
+      <column name="ID" type="INT" autoIncrement="true" />
+      <column name="NAME" type="VARCHAR(255)" />
+      <column name="PHONE" type="VARCHAR(20)" />
+      <column name="LOGIN" type="VARCHAR(20)" />
+      <column name="PASSWORD" type="VARCHAR(20)" />
+      <column name="EMAIL" type="VARCHAR(20)" />
+      <column name="ROLE" type="VARCHAR(10)" />
+    </createTable>
+    <addNotNullConstraint columnDataType="INT" columnName="ID" tableName="USERS" />
+    <addPrimaryKey tableName="USERS" columnNames="ID"/>
+
+    <createTable tableName="BRANDS">
+      <column name="ID" type="INT" autoIncrement="true" />
+      <column name="NAME" type="VARCHAR(255)" />
+    </createTable>
+    <addNotNullConstraint columnDataType="INT" columnName="ID" tableName="BRANDS" />
+    <addPrimaryKey tableName="BRANDS" columnNames="ID"/>
+
+    <createTable tableName="MODELS">
+      <column name="ID" type="INT" autoIncrement="true" />
+      <column name="NAME" type="VARCHAR(255)" />
+      <column name="BRAND_ID" type="INT" />
+    </createTable>
+    <addNotNullConstraint columnDataType="INT" columnName="ID" tableName="MODELS" />
+    <addPrimaryKey tableName="MODELS" columnNames="ID"/>
+    <addForeignKeyConstraint baseColumnNames="BRAND_ID"
+      baseTableName="models"
+      constraintName="fk_models_brands"
+      onDelete="CASCADE"
+      onUpdate="RESTRICT"
+      referencedColumnNames="id"
+      referencedTableName="brands"/>
+
+  <createTable tableName="CARS">
+    <column name="ID" type="INT" autoIncrement="true" />
+    <column name="MODEL_ID" type="INT" />
+    <column name="YEAR" type="INT(4)" />
+    <column name="BODYTYPE" type="VARCHAR(255)" />
+    <column name="CONDITION" type="VARCHAR(255)" />
+    <column name="ENGINETYPE" type="VARCHAR(255)" />
+    <column name="TRANSMISSION" type="VARCHAR(255)" />
+  </createTable>
+  <addNotNullConstraint columnDataType="INT" columnName="ID" tableName="CARS" />
+  <addPrimaryKey tableName="CARS" columnNames="ID"/>
+  <addForeignKeyConstraint baseColumnNames="MODEL_ID"
+    baseTableName="CARS"
+    constraintName="fk_cars_models"
+    onDelete="CASCADE"
+    onUpdate="RESTRICT"
+    referencedColumnNames="id"
+    referencedTableName="models"/>
+
+  <createTable tableName="ADS">
+    <column name="ID" type="INT" autoIncrement="true" />
+    <column name="CAR_ID" type="INT" />
+    <column name="USER_ID" type="INT" />
+    <column name="STATUS" type="VARCHAR(255)" />
+    <column name="PRICE" type="NUMBER(15)" />
+    <column name="DATE" type="TIMESTAMP" />
+  </createTable>
+  <addNotNullConstraint columnDataType="INT" columnName="ID" tableName="ADS" />
+  <addPrimaryKey tableName="ADS" columnNames="ID"/>
+  <addForeignKeyConstraint baseColumnNames="CAR_ID"
+    baseTableName="ADS"
+    constraintName="fk_ads_cars"
+    onDelete="CASCADE"
+    onUpdate="RESTRICT"
+    referencedColumnNames="id"
+    referencedTableName="cars"/>
+  <addForeignKeyConstraint baseColumnNames="USER_ID"
+    baseTableName="ADS"
+    constraintName="fk_ads_users"
+    onDelete="CASCADE"
+    onUpdate="RESTRICT"
+    referencedColumnNames="id"
+    referencedTableName="users"/>
+
+    <createTable tableName="PHOTOS">
+      <column name="ID" type="INT" autoIncrement="true" />
+      <column name="FILENAME" type="VARCHAR(255)" />
+      <column name="AD_ID" type="INT" />
+    </createTable>
+    <addNotNullConstraint columnDataType="INT" columnName="ID" tableName="PHOTOS" />
+    <addPrimaryKey tableName="PHOTOS" columnNames="ID"/>
+    <addForeignKeyConstraint baseColumnNames="AD_ID"
+      baseTableName="photos"
+      constraintName="fk_photos_ads"
+      onDelete="CASCADE"
+      onUpdate="RESTRICT"
+      referencedColumnNames="id"
+      referencedTableName="ads"/>
+  </changeSet>
+</databaseChangeLog>
