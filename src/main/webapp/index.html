@@ -1,0 +1,92 @@
+<html>
+<head>
+  <!-- Required meta tags -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+  <style>
+    .done {
+      text-decoration: line-through;
+      color: darkgrey;
+    }
+  </style>
+
+  <title>TODO list</title>
+</head>
+<body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="js/item.js"></script>
+
+
+<div class="container">
+  <div class="row">
+    <div>
+      <h4>TODO list</h4>
+    </div>
+    <br>
+
+    <div class="container">
+      <div class="row">
+        <div class="col sm-6">
+          <input type="text" class="form-control" id="task" aria-describedby="taskHelp"
+                 placeholder="Enter todo">
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary" onclick="addItem()">Submit</button>
+          <button type="submit" class="btn btn-link" id="showactive" onclick="showCompleted()">show
+            completed
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col sm-12">
+          <div class="float-right">
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col sm-12">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col sm-12">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Description</th>
+              <th scope="col">Created</th>
+              <th scope="col">Done</th>
+              <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody id="items">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

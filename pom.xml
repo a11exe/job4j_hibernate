@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ru.job4j</groupId>
   <artifactId>job4j_hibernate</artifactId>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <version>2.0</version>
   <name>job4j_hibernate</name>
   <url>http://job4j.ru/</url>
@@ -14,15 +14,63 @@
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <hibernate>5.4.9.Final</hibernate>
+    <com.h2database.h2.version>1.4.187</com.h2database.h2.version>
+    <jackson.core>2.10.1</jackson.core>
+    <jetty-version>9.4.14.v20181114</jetty-version>
   </properties>
 
   <dependencies>
+
+    <!--servlet-->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!--ajax-->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson.core}</version>
+    </dependency>
+
+    <!--db-->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${com.h2database.h2.version}</version>
+    </dependency>
+
     <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
     <dependency>
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
       <version>${hibernate}</version>
+    </dependency>
+
+    <!--test-->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.hamcrest</groupId>
+          <artifactId>hamcrest-core</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- This will get hamcrest-core automatically -->
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
     </dependency>
 
     <!--logging-->
@@ -52,6 +100,14 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.15</version>
+        <configuration>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>2.17</version>
         <executions>
@@ -70,6 +126,11 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>${jetty-version}</version>
       </plugin>
     </plugins>
   </build>
