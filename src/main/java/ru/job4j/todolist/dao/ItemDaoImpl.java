@@ -1,7 +1,7 @@
 package ru.job4j.todolist.dao;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -30,92 +30,75 @@ public class ItemDaoImpl implements ItemDao {
     return INSTANCE;
   }
 
+  private <T> T tx(final Function<Session, T> command) {
+    final Session session = HibernateUtil.getInstance().getSessionFactory().openSession();
+    final Transaction tx = session.beginTransaction();
+    try {
+      T rsl = command.apply(session);
+      tx.commit();
+      return rsl;
+    } catch (final Exception e) {
+      LOG.error("error msg: {}", e.getMessage());
+      session.getTransaction().rollback();
+      throw e;
+    } finally {
+      session.close();
+    }
+  }
+
   @Override
   public void save(Item item) {
-    Transaction transaction = null;
-    try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
-      transaction = session.beginTransaction();
-      session.save(item);
-      transaction.commit();
-    } catch (Exception e) {
-      LOG.error("error saving item {} msg: {}", item, e.getMessage());
-      if (transaction != null) {
-        transaction.rollback();
-      }
-    }
+    this.tx(
+        session -> session.save(item)
+    );
   }
 
   @Override
   public void update(Item item) {
-    Transaction transaction = null;
-    try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
-      transaction = session.beginTransaction();
-      session.update(item);
-      transaction.commit();
-    } catch (Exception e) {
-      LOG.error("error updating item {} msg: {}", item, e.getMessage());
-      if (transaction != null) {
-        transaction.rollback();
-      }
-    }
+    this.tx(
+        session -> {
+          session.update(item);
+          return item;
+        }
+    );
   }
 
   @Override
   public List<Item> findAll(boolean onlyActive) {
-    Transaction transaction = null;
-    List<Item> items = new ArrayList<>();
-    try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
-      transaction = session.beginTransaction();
-      CriteriaBuilder cb = session.getCriteriaBuilder();
-      CriteriaQuery<Item> cr = cb.createQuery(Item.class);
-      Root<Item> root = cr.from(Item.class);
-      if (onlyActive) {
-        cr.select(root).where(cb.equal(root.get("done"), false));
-      } else {
-        cr.select(root);
-      }
-      cr.orderBy(cb.desc(root.get("created")));
+    return this.tx(
+        session -> {
+          CriteriaBuilder cb = session.getCriteriaBuilder();
+          CriteriaQuery<Item> cr = cb.createQuery(Item.class);
+          Root<Item> root = cr.from(Item.class);
+          if (onlyActive) {
+            cr.select(root).where(cb.equal(root.get("done"), false));
+          } else {
+            cr.select(root);
+          }
+          cr.orderBy(cb.desc(root.get("created")));
 
-      Query<Item> query = session.createQuery(cr);
-      items = query.getResultList();
-      transaction.commit();
-    } catch (Exception e) {
-      LOG.error("error find all items {}", e.getMessage());
-      if (transaction != null) {
-        transaction.rollback();
-      }
-    }
-    return items;
+          Query<Item> query = session.createQuery(cr);
+          return query.getResultList();
+        }
+
+    );
   }
 
   @Override
   public Item find(Item item) {
-    Transaction transaction = null;
-    try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
-      transaction = session.beginTransaction();
-      item = session.get(Item.class, item.getId());
-      transaction.commit();
-    } catch (Exception e) {
-      LOG.error("error saving item {} msg: {}", item, e.getMessage());
-      if (transaction != null) {
-        transaction.rollback();
-      }
-    }
-    return item;
+    return this.tx(
+        session ->
+            session.get(Item.class, item.getId())
+    );
   }
 
   @Override
   public void delete(Item item) {
-    Transaction transaction = null;
-    try (Session session = HibernateUtil.getInstance().getSessionFactory().openSession()) {
-      transaction = session.beginTransaction();
-      session.delete(item);
-      transaction.commit();
-    } catch (Exception e) {
-      LOG.error("error saving item {} msg: {}", item, e.getMessage());
-      if (transaction != null) {
-        transaction.rollback();
-      }
-    }
+    this.tx(
+        session -> {
+          session.delete(item);
+          return item;
+        }
+    );
   }
 }
