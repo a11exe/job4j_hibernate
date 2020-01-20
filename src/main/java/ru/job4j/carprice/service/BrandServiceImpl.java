@@ -35,4 +35,9 @@ public class BrandServiceImpl implements BrandService {
   public List<Brand> findAll() {
     return brandDao.findAll();
   }
+
+  @Override
+  public Brand findByName(String name) {
+    return brandDao.findByName(name);
+  }
 }

@@ -20,7 +20,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-
     <script>
         $(document).ready(function(){
             $('.slider').bxSlider();
@@ -46,7 +45,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="nav-link" href="${baseUrl}"><img src="${baseUrl}/img/sellcar.png" /></a>
+        <a class="nav-link" href="${baseUrl}/"><img src="${baseUrl}/img/sellcar.png" /></a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
 
@@ -92,15 +91,48 @@
 
     <div class="row">
         <div class="col-sm-4">
+            <h4>Filters</h4>
+            <form class="form-filter" method="post" action="<c:out value="${baseUrl}" />/adfilter">
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelectBrand">Brand</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelectBrand" name="brand">
+                        <c:if test = "${brand == null}">
+                            <option selected>Choose brand...</option>
+                        </c:if>
+                        <c:forEach var="brand" items="${brandsMap}">
+                            <option value="${brand.key.name}" ${brand.key.name eq brandName ? 'selected' : ''}>${brand.key.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="input-group mb-3 ml-3">
+                    <input class="form-check-input" type="checkbox" value="hasPhoto" id="hasPhoto" name="hasPhoto" ${hasPhoto ? 'checked' : ''}>
+                    <label class="form-check-label" for="hasPhoto">
+                        Only with photos
+                    </label>
+                </div>
+                <div class="input-group mb-3 ml-3">
+                    <input class="form-check-input" type="checkbox" value="lastDay" id="lastDay" name="lastDay" ${lastDay ? 'checked' : ''}>
+                    <label class="form-check-label" for="lastDay">
+                        Only for last day
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Find</button>
+                </div>
+            </form>
         </div>
         <div class="col-sm-8">
             <div class="row">
                 <table class="table table-condensed small">
                     <tbody>
                     <tr>
-                    <c:forEach var="brand" items="${brands}" varStatus="loopbrand">
+                    <c:forEach var="brand" items="${brandsMap}" varStatus="loopbrand">
                         <td>
-                            <a href=${baseUrl}"/brand/<c:out value="${brand.key.name}"/>"><c:out
+                            <a href=${baseUrl}"/brand?name=<c:out value="${brand.key.name}"/>"><c:out
                                     value="${brand.key.name}"/></a> <span class="text-secondary">${brand.value}</span>
                         </td>
                         <c:if test="${loopbrand.index > 0 && (loopbrand.index+1)%6 == 0}">

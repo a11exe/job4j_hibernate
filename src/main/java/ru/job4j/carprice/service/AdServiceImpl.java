@@ -14,6 +14,7 @@ import ru.job4j.carprice.dao.AdDao;
 import ru.job4j.carprice.dao.AdDaoImpl;
 import ru.job4j.carprice.dao.BrandDao;
 import ru.job4j.carprice.dao.BrandDaoImpl;
+import ru.job4j.carprice.dao.Filter;
 import ru.job4j.carprice.model.Ad;
 import ru.job4j.carprice.model.Brand;
 import ru.job4j.carprice.model.User;
@@ -139,5 +140,15 @@ public class AdServiceImpl implements AdService {
     brands.forEach(b -> brandsCount.put(b, counted.containsKey(b) ? counted.get(b).intValue() : 0));
 
     return brandsCount;
+  }
+
+  @Override
+  public List<Ad> findByBrand(Brand brand) {
+    return adDao.findByBrand(brand);
+  }
+
+  @Override
+  public List<Ad> findByFilter(Filter filter) {
+    return adDao.findByFilter(filter);
   }
 }

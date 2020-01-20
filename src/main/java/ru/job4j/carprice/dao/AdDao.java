@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import ru.job4j.carprice.model.Ad;
+import ru.job4j.carprice.model.Brand;
 import ru.job4j.carprice.model.User;
 
 public interface AdDao {
@@ -13,6 +14,10 @@ public interface AdDao {
   void update(Ad ad);
 
   List<Ad> findAll();
+
+  List<Ad> findByBrand(Brand brand);
+
+  List<Ad> findByFilter(Filter filter);
 
   Set<Ad> findByUser(User user);
 

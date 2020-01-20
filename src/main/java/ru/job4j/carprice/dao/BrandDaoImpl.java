@@ -32,4 +32,9 @@ public class BrandDaoImpl extends AbstractDao implements BrandDao {
   public List<Brand> findAll() {
     return super.findAll("Brand");
   }
+
+  @Override
+  public Brand findByName(String name) {
+    return (Brand) super.findAllBy("from Brand b where b.name =: name", "name", name).stream().findFirst().orElse(null);
+  }
 }
