@@ -7,7 +7,7 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="ru.job4j.hibernate" level="info" additivity="false">
+        <Logger name="ru.job4j.carprice" level="info" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
         <Root level="info">
