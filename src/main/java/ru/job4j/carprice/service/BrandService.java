@@ -10,4 +10,6 @@ public interface BrandService {
 
   List<Brand> findAll();
 
+  Brand findByName(String name);
+
 }

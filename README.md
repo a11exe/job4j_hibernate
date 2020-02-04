@@ -3,7 +3,7 @@
 # Car price
 car sales online system
 
-![hall](https://github.com/a11exe/job4j_hibernate/blob/task_176156/carprice.gif)
+![hall](https://github.com/a11exe/job4j_hibernate/blob/task_176164/carprice.gif)
 
 The task is:
 

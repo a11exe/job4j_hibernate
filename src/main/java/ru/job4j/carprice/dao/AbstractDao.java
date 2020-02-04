@@ -1,11 +1,13 @@
 package ru.job4j.carprice.dao;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import ru.job4j.carprice.util.HibernateUtil;
 
 /**
@@ -77,6 +79,17 @@ public class AbstractDao {
     tx(session -> {
           session.delete(t);
           return t;
+        }
+    );
+  }
+
+  public <T> List<T> findAllByParams(String query, Map<String, Object> params) {
+    return tx(session -> {
+          Query queryH = session.createQuery(query);
+          for (Map.Entry<String, Object> entry : params.entrySet()) {
+            queryH.setParameter(entry.getKey(), entry.getValue());
+          }
+          return (List<T>) queryH.getResultList();
         }
     );
   }
