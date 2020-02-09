@@ -85,9 +85,8 @@ public class Model {
   @Override
   public String toString() {
     return "Model{" +
-        "id=" + id +
-        ", name='" + name + '\'' +
-        ", brand=" + brand +
-        '}';
+            "id=" + id +
+            ", name='" + name + '\'' +
+            '}';
   }
 }

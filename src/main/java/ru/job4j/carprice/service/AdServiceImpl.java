@@ -1,5 +1,16 @@
 package ru.job4j.carprice.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import ru.job4j.carprice.dao.AdDao;
+import ru.job4j.carprice.dao.BrandDao;
+import ru.job4j.carprice.dao.Filter;
+import ru.job4j.carprice.model.Ad;
+import ru.job4j.carprice.model.Brand;
+import ru.job4j.carprice.model.User;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -8,36 +19,22 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import ru.job4j.carprice.dao.AdDao;
-import ru.job4j.carprice.dao.AdDaoImpl;
-import ru.job4j.carprice.dao.BrandDao;
-import ru.job4j.carprice.dao.BrandDaoImpl;
-import ru.job4j.carprice.dao.Filter;
-import ru.job4j.carprice.model.Ad;
-import ru.job4j.carprice.model.Brand;
-import ru.job4j.carprice.model.User;
 
 /**
  * @author Alexander Abramov (alllexe@mail.ru)
  * @version 1
  * @since 26.12.2019
  */
+@Component
 public class AdServiceImpl implements AdService {
 
   private static final Logger LOG = LogManager.getLogger(AdServiceImpl.class);
-  private final AdDao adDao = AdDaoImpl.getInstance();
-  private final BrandDao brandDao = BrandDaoImpl.getInstance();
 
-  private final static AdService INSTANCE = new AdServiceImpl();
+  @Autowired
+  private AdDao adDao;
 
-  public static AdService getInstance() {
-    return INSTANCE;
-  }
-
-  private AdServiceImpl() {
-  }
+  @Autowired
+  private BrandDao brandDao;
 
   @Override
   public ServiceAnswer<Ad> save(Ad ad) {

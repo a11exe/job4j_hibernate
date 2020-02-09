@@ -8,6 +8,7 @@ import liquibase.exception.LiquibaseException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.job4j.carprice.model.BodyType;
 import ru.job4j.carprice.model.Car;
 
@@ -18,7 +19,8 @@ import ru.job4j.carprice.model.Car;
  */
 public class CarsDaoImplTest extends BaseTest {
 
-  private final CarsDao carDao = CarsDaoImpl.getInstance();
+  @Autowired
+  private CarsDao carDao;
 
   @BeforeClass
   public static void before() throws LiquibaseException {

@@ -7,27 +7,22 @@ package ru.job4j.carprice.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.job4j.carprice.dao.PhotoDao;
-import ru.job4j.carprice.dao.PhotoDaoImpl;
 import ru.job4j.carprice.model.Ad;
 import ru.job4j.carprice.model.Photo;
 import ru.job4j.carprice.model.User;
 
 import java.util.List;
 
+@Component
 public class PhotoServiceImpl implements PhotoService {
 
     private static final Logger LOG = LogManager.getLogger(PhotoServiceImpl.class);
-    private final PhotoDao photoDao = PhotoDaoImpl.getInstance();
 
-    private final static PhotoService INSTANCE = new PhotoServiceImpl();
-
-    public static PhotoService getInstance() {
-        return INSTANCE;
-    }
-
-    private PhotoServiceImpl() {
-    }
+    @Autowired
+    private PhotoDao photoDao;
 
     @Override
     public List<Photo> findByAd(Ad ad) {

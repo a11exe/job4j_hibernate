@@ -8,9 +8,9 @@ import liquibase.exception.LiquibaseException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.job4j.carprice.dao.BaseTest;
 import ru.job4j.carprice.dao.UserDao;
-import ru.job4j.carprice.dao.UserDaoImpl;
 import ru.job4j.carprice.model.Role;
 import ru.job4j.carprice.model.User;
 
@@ -21,8 +21,10 @@ import ru.job4j.carprice.model.User;
  */
 public class UserServiceImplTest extends BaseTest {
 
-  private final UserService userService = UserServiceImpl.getInstance();
-  private final UserDao userDao = UserDaoImpl.getInstance();
+  @Autowired
+  private UserService userService;
+  @Autowired
+  private UserDao userDao;
 
   @BeforeClass
   public static void before() throws LiquibaseException {

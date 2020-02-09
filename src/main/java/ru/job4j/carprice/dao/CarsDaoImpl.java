@@ -3,6 +3,7 @@ package ru.job4j.carprice.dao;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import ru.job4j.carprice.model.Car;
 
 /**
@@ -10,19 +11,10 @@ import ru.job4j.carprice.model.Car;
  * @version 1
  * @since 25.12.2019
  */
+@Repository
 public class CarsDaoImpl extends AbstractDao implements CarsDao {
 
   private static final Logger LOG = LogManager.getLogger(CarsDaoImpl.class);
-
-  private final static CarsDao INSTANCE = new CarsDaoImpl();
-
-  private CarsDaoImpl() {
-  }
-
-  public static CarsDao getInstance() {
-    return INSTANCE;
-  }
-
 
   @Override
   public void save(Car car) {

@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-sm-9">
                             <span class="btn btn-default btn-file">
-                                <input id="input" name="input[]" type="file" class="file" multiple
+                                <input id="files" name="files" type="file" class="file" multiple
                                        accept=".jpg,.png,.jpeg" data-show-upload="true" data-show-caption="true">
                             </span>
                         </div>

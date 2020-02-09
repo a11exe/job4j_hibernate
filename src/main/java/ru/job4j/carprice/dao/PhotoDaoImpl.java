@@ -7,24 +7,16 @@ package ru.job4j.carprice.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import ru.job4j.carprice.model.Ad;
 import ru.job4j.carprice.model.Photo;
 
 import java.util.List;
 
+@Repository
 public class PhotoDaoImpl extends AbstractDao implements PhotoDao {
 
     private static final Logger LOG = LogManager.getLogger(PhotoDaoImpl.class);
-
-    private final static PhotoDao INSTANCE = new PhotoDaoImpl();
-
-    private PhotoDaoImpl() {
-    }
-
-    public static PhotoDao getInstance() {
-        return INSTANCE;
-    }
-
 
     @Override
     public List<Photo> findByAd(Ad ad) {

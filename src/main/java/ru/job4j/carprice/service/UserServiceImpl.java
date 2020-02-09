@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.job4j.carprice.dao.UserDao;
-import ru.job4j.carprice.dao.UserDaoImpl;
 import ru.job4j.carprice.model.User;
 
 /**
@@ -14,11 +15,16 @@ import ru.job4j.carprice.model.User;
  * @version 1
  * @since 25.12.2019
  */
+@Component
 public class UserServiceImpl implements UserService {
 
   private static final Logger LOG = LogManager.getLogger(UserServiceImpl.class);
-  private final UserDao userDao = UserDaoImpl.getInstance();
-  private final AdService adService = AdServiceImpl.getInstance();
+
+  @Autowired
+  private UserDao userDao;
+
+  @Autowired
+  private AdService adService;
 
   private final static UserService INSTANCE = new UserServiceImpl();
 

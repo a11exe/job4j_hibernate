@@ -3,6 +3,7 @@ package ru.job4j.carprice.dao;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import ru.job4j.carprice.model.Brand;
 
 /**
@@ -10,18 +11,10 @@ import ru.job4j.carprice.model.Brand;
  * @version 1
  * @since 23.12.2019
  */
+@Repository
 public class BrandDaoImpl extends AbstractDao implements BrandDao {
 
   private static final Logger LOG = LogManager.getLogger(BrandDaoImpl.class);
-
-  private final static BrandDao INSTANCE = new BrandDaoImpl();
-
-  private BrandDaoImpl() {
-  }
-
-  public static BrandDao getInstance() {
-    return INSTANCE;
-  }
 
   @Override
   public Brand find(Brand brand) {

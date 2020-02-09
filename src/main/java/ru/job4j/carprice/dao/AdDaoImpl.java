@@ -9,6 +9,7 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import ru.job4j.carprice.model.Ad;
 import ru.job4j.carprice.model.Brand;
 import ru.job4j.carprice.model.User;
@@ -18,18 +19,10 @@ import ru.job4j.carprice.model.User;
  * @version 1
  * @since 25.12.2019
  */
+@Repository
 public class AdDaoImpl extends AbstractDao implements AdDao {
 
   private static final Logger LOG = LogManager.getLogger(AdDaoImpl.class);
-
-  private final static AdDao INSTANCE = new AdDaoImpl();
-
-  public static AdDao getInstance() {
-    return INSTANCE;
-  }
-
-  private AdDaoImpl() {
-  }
 
   @Override
   public void save(Ad ad) {

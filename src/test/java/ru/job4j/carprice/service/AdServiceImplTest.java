@@ -12,6 +12,7 @@ import liquibase.exception.LiquibaseException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import ru.job4j.carprice.dao.BaseTest;
 import ru.job4j.carprice.model.Ad;
 import ru.job4j.carprice.model.BodyType;
@@ -29,9 +30,10 @@ import ru.job4j.carprice.model.Transmission;
  */
 public class AdServiceImplTest extends BaseTest {
 
-  private final AdService adService = AdServiceImpl.getInstance();
-  private final ModelService modelService = ModelServiceImpl.getInstance();
-  private final BrandService brandService = BrandServiceImpl.getInstance();
+  @Autowired
+  private AdService adService;
+  private ModelService modelService;
+  private BrandService brandService;
 
   @BeforeClass
   public static void before() throws LiquibaseException {
