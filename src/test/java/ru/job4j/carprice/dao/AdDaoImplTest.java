@@ -71,7 +71,7 @@ public class AdDaoImplTest extends BaseTest {
     Ad ad = new Ad();
     Ad ad2 = new Ad();
     User admin = new User();
-    admin.setId(1);
+    admin.setId(1L);
     ad2.setUser(admin);
     adDao.save(ad);
     adDao.save(ad2);

@@ -49,7 +49,7 @@ public class FileController {
     @PostMapping("/upload/{adId}")
     public String fileUpload(
             @RequestParam("files") MultipartFile[] files,
-            @PathVariable("adId") Integer adId,
+            @PathVariable("adId") Long adId,
             Model modelMap) throws IOException {
 
         String uploadPath = context.getRealPath("")
@@ -89,7 +89,7 @@ public class FileController {
 
     @GetMapping("/deletephoto")
     public String deletePhoto(
-            @RequestParam("id") int idPhoto,
+            @RequestParam("id") Long idPhoto,
             Model model) {
 
         Ad ad = photoService.find(new Photo(idPhoto)).getAd();

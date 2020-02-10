@@ -36,14 +36,14 @@ public class ModelDaoImplTest extends BaseTest {
   @Test
   public void findByBrand() {
     Brand brand = new Brand();
-    brand.setId(1);
+    brand.setId(1L);
     assertThat(modelDao.findByBrand(brandDao.find(brand)).size(), is(30));
   }
 
   @Test
   public void find() {
     Model model = new Model();
-    model.setId(2);
+    model.setId(2L);
     assertThat(modelDao.find(model).getName(), is("2101"));
   }
 

@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.job4j.carprice.dao.AdDao;
+import ru.job4j.carprice.dao.AdRepository;
 import ru.job4j.carprice.dao.BrandDao;
 import ru.job4j.carprice.dao.Filter;
 import ru.job4j.carprice.model.Ad;
@@ -31,7 +31,7 @@ public class AdServiceImpl implements AdService {
   private static final Logger LOG = LogManager.getLogger(AdServiceImpl.class);
 
   @Autowired
-  private AdDao adDao;
+  private AdRepository adRepository;
 
   @Autowired
   private BrandDao brandDao;
@@ -41,7 +41,7 @@ public class AdServiceImpl implements AdService {
     ServiceAnswer<Ad> serviceAnswer = validate(ad);
     if (serviceAnswer.isNoErrors()) {
       ad.setDate(LocalDateTime.now());
-      adDao.save(ad);
+      adRepository.save(ad);
       serviceAnswer.setValue(ad);
     }
     return serviceAnswer;
@@ -50,11 +50,11 @@ public class AdServiceImpl implements AdService {
   @Override
   public ServiceAnswer<Ad> update(Ad ad, User loggedUser) {
     ServiceAnswer<Ad> serviceAnswer = validate(ad);
-    Ad adDb = adDao.find(ad);
+    Ad adDb = adRepository.find(ad.getId());
     if (adDb.getUser().equals(loggedUser)) {
         ad.setUser(loggedUser);
       if (serviceAnswer.isNoErrors()) {
-        adDao.update(ad);
+        adRepository.save(ad);
         serviceAnswer.setValue(ad);
       }
     } else {
@@ -102,34 +102,34 @@ public class AdServiceImpl implements AdService {
 
   @Override
   public List<Ad> findAll() {
-    return adDao.findAll();
+    return adRepository.findAll();
   }
 
   @Override
   public Set<Ad> findByUser(User user) {
-    return adDao.findByUser(user);
+    return adRepository.findByUser(user);
   }
 
   @Override
   public Ad find(Ad ad) {
-    return adDao.find(ad);
+    return adRepository.find(ad);
   }
 
   @Override
   public Ad load(Ad ad) {
-    return adDao.load(ad);
+    return adRepository.load(ad);
   }
 
   @Override
   public void delete(Ad ad) {
-    adDao.delete(ad);
+    adRepository.delete(ad);
   }
 
   @Override
   public Map<Brand, Integer> getAdsByBrandCount() {
 
     List<Brand> brands = brandDao.findAll();
-    Map<Brand, Long> counted = adDao.findAll().stream()
+    Map<Brand, Long> counted = adRepository.findAll().stream()
         .map(o -> o.getCar().getModel().getBrand())
         .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 
@@ -141,11 +141,11 @@ public class AdServiceImpl implements AdService {
 
   @Override
   public List<Ad> findByBrand(Brand brand) {
-    return adDao.findByBrand(brand);
+    return adRepository.findByBrand(brand);
   }
 
   @Override
   public List<Ad> findByFilter(Filter filter) {
-    return adDao.findByFilter(filter);
+    return adRepository.findByFilter(filter);
   }
 }

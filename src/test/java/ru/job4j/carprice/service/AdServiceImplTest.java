@@ -55,7 +55,7 @@ public class AdServiceImplTest extends BaseTest {
     car.setBodyType(BodyType.COUPE);
     car.setCondition(Condition.DAMAGED);
     Model model = new Model();
-    model.setId(2);
+    model.setId(2L);
     car.setModel(modelService.load(model));
     ad.setPrice(BigDecimal.ONE);
     ad.setCar(car);
@@ -89,7 +89,7 @@ public class AdServiceImplTest extends BaseTest {
     car.setBodyType(BodyType.COUPE);
     car.setCondition(Condition.DAMAGED);
     Model model = new Model();
-    model.setId(2);
+    model.setId(2L);
     car.setModel(modelService.load(model));
     ad.setPrice(BigDecimal.ONE);
     ad.setCar(car);
@@ -107,7 +107,7 @@ public class AdServiceImplTest extends BaseTest {
     car.setBodyType(BodyType.COUPE);
     car.setCondition(Condition.DAMAGED);
     Model model = new Model();
-    model.setId(2);
+    model.setId(2L);
     car.setModel(modelService.load(model));
     ad.setCar(car);
     ServiceAnswer<Ad> adServiceAnswer = adService.validate(ad);
@@ -131,7 +131,7 @@ public class AdServiceImplTest extends BaseTest {
     car.setBodyType(BodyType.COUPE);
     car.setCondition(Condition.DAMAGED);
     Model model = new Model();
-    model.setId(145);
+    model.setId(145L);
     model = modelService.find(model);
     car.setModel(model);
     ad.setPrice(BigDecimal.ONE);
@@ -142,7 +142,7 @@ public class AdServiceImplTest extends BaseTest {
 
     assertThat(adsByBrandCount.get(model.getBrand()), is(1));
     Brand brand = new Brand();
-    brand.setId(5);
+    brand.setId(5L);
     brand = brandService.find(brand);
     assertThat(adsByBrandCount.get(brand), is(0));
     adService.delete(ad);

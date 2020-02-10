@@ -16,10 +16,21 @@ public class BaseServiceImpl implements BaseService {
 
   @Override
   public Integer getInt(String str) {
-
     Integer i = 0;
     try {
       i = Integer.parseInt(str);
+    } catch (NumberFormatException e) {
+      LOG.error("error parsing to int {}", str);
+    }
+
+    return i;
+  }
+
+  @Override
+  public Long getLong(String str) {
+    Long i = 0L;
+    try {
+      i = Long.parseLong(str);
     } catch (NumberFormatException e) {
       LOG.error("error parsing to int {}", str);
     }

@@ -63,13 +63,13 @@ public class AbstractDao {
     );
   }
 
-  public <T> T load(Class<T> tClass, Integer id) {
+  public <T> T load(Class<T> tClass, Long id) {
     return tx(session ->
         session.load(tClass, id)
     );
   }
 
-  public <T> T find(Class<T> tClass, Integer id) {
+  public <T> T find(Class<T> tClass, Long id) {
     return tx(session ->
         session.get(tClass, id)
     );

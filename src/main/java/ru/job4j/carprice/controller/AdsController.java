@@ -93,7 +93,7 @@ public class AdsController {
 
     Car car = new Car();
     ru.job4j.carprice.model.Model modelCar = new ru.job4j.carprice.model.Model();
-    modelCar.setId(baseService.getInt(parameters.get("model")));
+    modelCar.setId(baseService.getLong(parameters.get("model")));
     modelCar = modelService.find(modelCar);
     car.setModel(modelCar);
 
@@ -170,9 +170,9 @@ public class AdsController {
     String status = parameters.get("status");
     ad.setStatus(baseService.isValidEnum(Status.class, status) ? Status.valueOf(status) : null);
     Car car = new Car();
-    car.setId(Integer.parseInt(parameters.get("carId")));
+    car.setId(Long.parseLong(parameters.get("carId")));
     ru.job4j.carprice.model.Model modelCar = new ru.job4j.carprice.model.Model();
-    modelCar.setId(baseService.getInt(parameters.get("model")));
+    modelCar.setId(baseService.getLong(parameters.get("model")));
     modelCar = modelService.load(modelCar);
     car.setModel(modelCar);
     car.setYear(baseService.getInt(parameters.get("year")));

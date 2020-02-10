@@ -15,7 +15,7 @@ public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "filename")
     private String name;
@@ -27,7 +27,7 @@ public class Photo {
     public Photo() {
     }
 
-    public Photo(int id) {
+    public Photo(Long id) {
         this.id = id;
     }
 
@@ -36,11 +36,11 @@ public class Photo {
         this.ad = ad;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -7,7 +7,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.job4j.carprice.dao.UserDao;
+import ru.job4j.carprice.dao.UserRepository;
 import ru.job4j.carprice.model.User;
 
 /**
@@ -15,13 +17,13 @@ import ru.job4j.carprice.model.User;
  * @version 1
  * @since 25.12.2019
  */
-@Component
+@Service
 public class UserServiceImpl implements UserService {
 
   private static final Logger LOG = LogManager.getLogger(UserServiceImpl.class);
 
   @Autowired
-  private UserDao userDao;
+  private UserRepository userRepository;
 
   @Autowired
   private AdService adService;
@@ -38,7 +40,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public ServiceAnswer<User> signIn(User user) {
     ServiceAnswer<User> serviceAnswer = new ServiceAnswer<>(true);
-    User finded = userDao.findByLogin(user);
+    User finded = userRepository.findByLogin(user);
     serviceAnswer.setValue(finded);
     if (finded == null) {
       serviceAnswer.setNoErrors(false);
@@ -82,21 +84,21 @@ public class UserServiceImpl implements UserService {
   public ServiceAnswer<User> signUp(User user) {
     ServiceAnswer<User> serviceAnswer = validate(user);
     if (serviceAnswer.isNoErrors()) {
-      User finded = userDao.findByLogin(user);
+      User finded = userRepository.findByLogin(user);
       if (finded != null) {
         serviceAnswer.setNoErrors(false);
         serviceAnswer.setMessages(Collections.singletonMap("login", "login alredy exist"));
       }
     }
     if (serviceAnswer.isNoErrors()) {
-      User finded = userDao.findByEmail(user);
+      User finded = userRepository.findByEmail(user);
       if (finded != null) {
         serviceAnswer.setNoErrors(false);
         serviceAnswer.setMessages(Collections.singletonMap("email", "email alredy exist"));
       }
     }
     if (serviceAnswer.isNoErrors()) {
-      userDao.save(user);
+      userRepository.save(user);
     }
 
     return serviceAnswer;
@@ -106,19 +108,19 @@ public class UserServiceImpl implements UserService {
   public ServiceAnswer<User> update(User user) {
     ServiceAnswer<User> serviceAnswer = validate(user);
     if (serviceAnswer.isNoErrors()) {
-      userDao.update(user);
+      userRepository.save(user);
     }
     return serviceAnswer;
   }
 
   @Override
   public List<User> findAll() {
-    return userDao.findAll();
+    return userRepository.findAll();
   }
 
   @Override
   public User find(User user) {
-    return userDao.find(user);
+    return userRepository.findById(user.getId()).orElse(null);
   }
 
   @Override

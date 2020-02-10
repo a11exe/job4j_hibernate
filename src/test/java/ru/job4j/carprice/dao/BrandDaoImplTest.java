@@ -38,7 +38,7 @@ public class BrandDaoImplTest extends BaseTest {
   @Test
   public void find() {
     Brand brand = new Brand();
-    brand.setId(2);
+    brand.setId(2L);
     assertThat(brandDao.find(brand).getName(), is("Audi"));
   }
 }

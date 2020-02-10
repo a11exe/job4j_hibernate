@@ -31,7 +31,7 @@ public class Ad {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
-  private int id;
+  private Long id;
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "car_id")
@@ -63,11 +63,11 @@ public class Ad {
     this.status = Status.ACTIVE;
   }
 
-  public int getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
